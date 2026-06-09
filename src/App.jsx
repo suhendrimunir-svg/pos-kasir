@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { 
   ShoppingCart, Package, Users, LogOut, Plus, Printer, Trash2, 
-  LayoutDashboard, Store, ArrowRight, CheckCircle, Lock, Wallet
+  LayoutDashboard, Store, ArrowRight, CheckCircle, Lock, Wallet, CreditCard, Sparkles
 } from 'lucide-react';
 
 // --- DATA AWAL (DUMMY) ---
@@ -16,7 +16,8 @@ const initialCustomers = [
 
 export default function App() {
   // STATE NAVIGASI HALAMAN UTAMA
-  // 'landing' | 'login' | 'register' | 'app'
+  // Tambahkan 'pricing' ke dalam komentar status
+  // 'landing' | 'login' | 'register' | 'pricing' | 'app'
   const [currentView, setCurrentView] = useState('landing');
   
   // STATE APLIKASI KASIR
@@ -33,9 +34,25 @@ export default function App() {
   const [shift, setShift] = useState({ isOpen: false, startCash: 0, currentCash: 0, salesCount: 0 });
 
   // --- FUNGSI NAVIGASI LUAR ---
-  const handleLogin = (username, password, role) => {
-    // Simulasi Login (Nantinya diganti dengan Supabase Auth)
-    setUser({ name: username, role: role, storeName: 'Toko ' + username });
+  const handleLogin = (username, password, role, isRegistering = false) => {
+    // Set user dengan tambahan properti 'plan'
+    setUser({ name: username, role: role, storeName: 'Toko ' + username, plan: 'none' });
+    
+    // Cegat jika ini pendaftaran baru, arahkan ke halaman Harga/Langganan
+    if (isRegistering) {
+      setCurrentView('pricing');
+    } else {
+      setCurrentView('app');
+      setActiveTab('dashboard');
+    }
+  };
+
+  const handleSelectPlan = (planName) => {
+    // Logika mengaktifkan paket atau masa percobaan (Trial 7 Hari)
+    const trialEndDate = new Date();
+    trialEndDate.setDate(trialEndDate.getDate() + 7); // Tambah 7 Hari dari sekarang
+
+    setUser(prev => ({...prev, plan: planName, trialEndDate: trialEndDate}));
     setCurrentView('app');
     setActiveTab('dashboard');
   };
@@ -49,6 +66,7 @@ export default function App() {
   if (currentView === 'landing') return <LandingPage onNavigate={setCurrentView} />;
   if (currentView === 'login') return <AuthScreen type="login" onNavigate={setCurrentView} onAuth={handleLogin} />;
   if (currentView === 'register') return <AuthScreen type="register" onNavigate={setCurrentView} onAuth={handleLogin} />;
+  if (currentView === 'pricing') return <PricingScreen onSelectPlan={handleSelectPlan} user={user} />;
 
   // --- KOMPONEN UTAMA (AREA PRIVAT TOKO) ---
   return (
@@ -82,7 +100,21 @@ export default function App() {
       </div>
 
       {/* AREA KONTEN UTAMA */}
-      <div className="flex-1 p-4 md:p-6 overflow-y-auto">
+      <div className="flex-1 p-4 md:p-6 overflow-y-auto flex flex-col">
+        
+        {/* Notifikasi Masa Percobaan (Trial) */}
+        {user?.plan === 'trial' && (
+          <div className="bg-yellow-100 border border-yellow-300 text-yellow-800 px-4 py-3 rounded-xl mb-6 flex flex-col sm:flex-row justify-between items-center shadow-sm gap-3">
+            <div className="flex items-center gap-2 font-bold">
+              <Sparkles size={20} className="text-yellow-600" />
+              Masa Percobaan Gratis (Trial): Sisa 7 Hari
+            </div>
+            <button onClick={() => setCurrentView('pricing')} className="bg-yellow-500 hover:bg-yellow-600 text-white px-5 py-2 rounded-full text-sm font-black shadow transition">
+              Upgrade ke Pro Sekarang
+            </button>
+          </div>
+        )}
+
         {activeTab === 'dashboard' && (
           <DashboardScreen transactions={transactions} products={products} role={user.role} />
         )}
@@ -187,7 +219,8 @@ function AuthScreen({ type, onNavigate, onAuth }) {
     e.preventDefault();
     if (!username || !password) return alert('Harap isi semua kolom');
     // Jika login biasa, biarkan pilih role. Jika daftar, otomatis jadi owner toko.
-    onAuth(username, password, type === 'register' ? 'owner' : role);
+    const isRegistering = type === 'register';
+    onAuth(username, password, isRegistering ? 'owner' : role, isRegistering);
   };
 
   return (
@@ -537,3 +570,46 @@ function CustomerScreen({ customers, setCustomers, role }) {
     </div>
   );
 }
+
+// ==========================================
+// LAYER 4: HALAMAN BERLANGGANAN (PRICING & TRIAL)
+// ==========================================
+function PricingScreen({ onSelectPlan, user }) {
+  return (
+    <div className="min-h-screen bg-slate-50 py-12 px-4 font-sans flex items-center justify-center">
+      <div className="max-w-4xl mx-auto w-full">
+        <div className="text-center mb-12">
+          <h1 className="text-4xl md:text-5xl font-black text-slate-900 mb-4">Pilih Paket Langganan</h1>
+          <p className="text-lg text-slate-600">Halo <b className="capitalize">{user?.name}</b>, selamat datang di Lentera POS! Pilih paket yang sesuai dengan kebutuhan skala toko Anda.</p>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-3xl mx-auto">
+          {/* Paket Trial */}
+          <div className="bg-white rounded-2xl shadow-xl border border-slate-200 p-8 flex flex-col relative overflow-hidden">
+            <div className="absolute top-0 right-0 bg-yellow-500 text-slate-900 font-bold px-4 py-1 rounded-bl-lg text-sm">Paling Populer</div>
+            <h3 className="text-2xl font-bold text-slate-800 mb-2">Percobaan Gratis</h3>
+            <div className="text-slate-500 mb-6">Mulai tanpa resiko, langsung gunakan sekarang.</div>
+            <div className="text-4xl font-black text-slate-900 mb-6">Rp 0 <span className="text-lg text-slate-500 font-normal">/ 7 Hari</span></div>
+
+            <ul className="space-y-4 mb-8 flex-1">
+              <li className="flex items-center gap-3 text-slate-700"><CheckCircle className="text-green-500" size={20}/> Akses penuh semua fitur Kasir</li>
+              <li className="flex items-center gap-3 text-slate-700"><CheckCircle className="text-green-500" size={20}/> Transaksi harian tanpa batas</li>
+              <li className="flex items-center gap-3 text-slate-700"><CheckCircle className="text-green-500" size={20}/> Manajemen inventaris & stok</li>
+              <li className="flex items-center gap-3 text-slate-700"><CheckCircle className="text-green-500" size={20}/> Dashboard Analitik Usaha</li>
+            </ul>
+
+            <button onClick={() => onSelectPlan('trial')} className="w-full py-4 bg-white border-2 border-blue-600 text-blue-600 rounded-xl font-bold hover:bg-blue-50 transition">
+              Mulai Coba Gratis 7 Hari
+            </button>
+          </div>
+
+          {/* Paket Pro */}
+          <div className="bg-blue-900 rounded-2xl shadow-2xl border border-blue-800 p-8 flex flex-col text-white transform md:-translate-y-4">
+            <h3 className="text-2xl font-bold mb-2 flex items-center gap-2"><Sparkles className="text-yellow-400" size={24}/> Paket Pro UMKM</h3>
+            <div className="text-blue-200 mb-6">Untuk bisnis yang siap bertumbuh pesat dan stabil.</div>
+            <div className="text-4xl font-black mb-6">Rp 99.000 <span className="text-lg text-blue-300 font-normal">/ Bulan</span></div>
+
+            <ul className="space-y-4 mb-8 flex-1">
+              <li className="flex items-center gap-3 text-blue-100"><CheckCircle className="text-yellow-400" size={20}/> <b>Semua fitur Percobaan Gratis</b></li>
+              <li className="flex items-center gap-3 text-blue-100"><CheckCircle className="text-yellow-400" size={20}/> Sinkronisasi Laporan Keuangan</li>
+              <li className="flex items-center gap-3 text-blue-100"><CheckCircle className="text-yellow-4
