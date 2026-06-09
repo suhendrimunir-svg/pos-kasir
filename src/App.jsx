@@ -16,7 +16,6 @@ const initialCustomers = [
 
 export default function App() {
   // STATE NAVIGASI HALAMAN UTAMA
-  // Tambahkan 'pricing' ke dalam komentar status
   // 'landing' | 'login' | 'register' | 'pricing' | 'app'
   const [currentView, setCurrentView] = useState('landing');
   
@@ -70,7 +69,7 @@ export default function App() {
 
   // --- KOMPONEN UTAMA (AREA PRIVAT TOKO) ---
   return (
-    <div className="min-h-screen bg-gray-50 flex flex-col md:flex-row font-sans">
+    <div className="min-h-screen bg-slate-50 flex flex-col md:flex-row font-sans">
       
       {/* SIDEBAR NAVIGASI */}
       <div className="w-full md:w-64 bg-blue-900 text-white flex flex-col print:hidden">
@@ -612,4 +611,16 @@ function PricingScreen({ onSelectPlan, user }) {
             <ul className="space-y-4 mb-8 flex-1">
               <li className="flex items-center gap-3 text-blue-100"><CheckCircle className="text-yellow-400" size={20}/> <b>Semua fitur Percobaan Gratis</b></li>
               <li className="flex items-center gap-3 text-blue-100"><CheckCircle className="text-yellow-400" size={20}/> Sinkronisasi Laporan Keuangan</li>
-              <li className="flex items-center gap-3 text-blue-100"><CheckCircle className="text-yellow-4
+              <li className="flex items-center gap-3 text-blue-100"><CheckCircle className="text-yellow-400" size={20}/> Hak akses hingga 5 kasir aktif</li>
+              <li className="flex items-center gap-3 text-blue-100"><CheckCircle className="text-yellow-400" size={20}/> Dukungan teknis prioritas via WA</li>
+            </ul>
+
+            <button onClick={() => onSelectPlan('pro')} className="w-full py-4 bg-yellow-500 text-slate-900 rounded-xl font-black hover:bg-yellow-400 transition shadow-lg flex items-center justify-center gap-2">
+              <CreditCard size={20} /> Berlanggan Sekarang
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
