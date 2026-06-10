@@ -51,7 +51,7 @@ export default function App() {
   
   // Store Settings State
   const [storeSettings, setStoreSettings] = useState({
-    name: 'Siak POS Demo',
+    name: 'SIAK POS Demo',
     theme: 'blue',
     branches: [{ id: 'b1', name: 'Cabang Utama' }]
   });
