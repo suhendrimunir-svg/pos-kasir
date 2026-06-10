@@ -147,7 +147,7 @@ export default function App() {
         <ToastNotification toast={toast} />
         <div className="bg-white p-8 rounded-2xl shadow-xl max-w-2xl w-full border-t-4 border-blue-600">
           <ShieldCheck className="w-16 h-16 text-blue-600 mx-auto mb-4" />
-          <h2 className="text-3xl font-black mb-2 text-center text-slate-800">Aktivasi Siak POS (Sekali Beli)</h2>
+          <h2 className="text-3xl font-black mb-2 text-center text-slate-800">Aktivasi SIAK POS (Sekali Beli)</h2>
           <p className="text-slate-600 mb-8 text-center">Toko <b>{appUser?.storeName}</b> berhasil didaftarkan! Selesaikan pembayaran untuk membuka akses aplikasi.</p>
           
           <div className="grid md:grid-cols-2 gap-6 mb-8">
@@ -167,7 +167,7 @@ export default function App() {
               <div className="bg-white p-4 rounded-xl shadow-sm border border-blue-100 flex items-center gap-4">
                 <QrCode className="text-blue-600 w-10 h-10" />
                 <div>
-                  <div className="font-bold text-sm text-slate-500">GoPay, Dana, OVO, ShopeePay</div>
+                  <div className="font-bold text-sm text-slate-500">GoPay</div>
                   <div className="font-mono text-xl font-bold">0852 7496 4111</div>
                 </div>
               </div>
@@ -198,7 +198,7 @@ export default function App() {
           <div className="flex justify-between items-center mb-8">
             <div>
                <h1 className="text-3xl font-black text-slate-800">Panel Super Admin</h1>
-               <p className="text-slate-500">Siak POS - Verifikasi Pendaftaran Toko</p>
+               <p className="text-slate-500">SIAK POS - Verifikasi Pendaftaran Toko</p>
             </div>
             <button onClick={() => {setAppUser(null); setCurrentView('landing');}} className="bg-red-600 text-white px-6 py-2 rounded-lg font-bold shadow hover:bg-red-700 flex items-center gap-2"><LogOut size={18}/> Keluar</button>
           </div>
@@ -249,7 +249,7 @@ export default function App() {
       <aside className={`w-64 ${themeObj.side} text-white flex flex-col print:hidden transition-colors duration-300`}>
         <div className="p-6 border-b border-white/10">
           <h2 className="font-black text-2xl flex items-center gap-2 text-white">
-            <Store className="opacity-80"/> Siak POS
+            <Store className="opacity-80"/> SIAK POS
           </h2>
           <div className="mt-4 bg-black/20 p-3 rounded-lg">
              <p className="text-xs text-slate-300 uppercase tracking-wider mb-1">Toko Aktif</p>
@@ -327,7 +327,7 @@ function LandingPage({ onNavigate }) {
       <nav className="flex justify-between items-center p-4 lg:px-20 bg-white/80 backdrop-blur-md border-b sticky top-0 z-50">
         <div className="font-black text-2xl text-blue-700 flex items-center gap-2">
           <div className="bg-blue-600 text-white p-2 rounded-xl"><Store size={24}/></div> 
-          Siak POS
+          SIAK POS
         </div>
         <div className="flex items-center gap-4">
           <button onClick={() => onNavigate('auth')} className="text-slate-600 font-bold hover:text-blue-600 hidden md:block">Masuk Dashboard</button>
@@ -356,7 +356,7 @@ function LandingPage({ onNavigate }) {
       <section className="py-24 px-6 bg-white border-y border-slate-100">
         <div className="max-w-6xl mx-auto flex flex-col lg:flex-row items-center gap-16">
           <div className="lg:w-1/2">
-            <h2 className="text-4xl font-black text-slate-900 mb-6">Bagaimana Cara Mengaktifkan Siak POS?</h2>
+            <h2 className="text-4xl font-black text-slate-900 mb-6">Bagaimana Cara Mengaktifkan SIAK POS?</h2>
             <div className="space-y-6">
               {[
                 { step: '1', title: 'Daftar Akun Toko', desc: 'Klik Daftar Sekarang, masukkan nama toko dan buat username Anda.' },
@@ -382,7 +382,7 @@ function LandingPage({ onNavigate }) {
                 </div>
                 <div className="bg-white p-5 rounded-2xl shadow-sm border flex items-center gap-4">
                   <div className="bg-blue-100 text-blue-600 p-3 rounded-xl"><QrCode size={32}/></div>
-                  <div><div className="text-xs font-bold text-slate-400">GOPAY / DANA / OVO / QRIS</div><div className="text-xl font-mono font-bold">0852 7496 4111</div><div className="text-sm font-medium">Scan QRIS / Input Manual</div></div>
+                  <div><div className="text-xs font-bold text-slate-400">GOPAY / QRIS</div><div className="text-xl font-mono font-bold">0852 7496 4111</div><div className="text-sm font-medium">Scan QRIS / Input Manual</div></div>
                 </div>
                 <div className="bg-green-50 p-5 rounded-2xl border border-green-200 mt-6">
                   <div className="text-xs font-bold text-green-800 mb-1">KONFIRMASI WHATSAPP</div>
