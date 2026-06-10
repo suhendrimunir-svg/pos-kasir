@@ -3,7 +3,7 @@ import {
   ShoppingCart, Package, Users, LogOut, Plus, Printer, Trash2, LayoutDashboard, 
   Store, CreditCard, ChevronRight, CheckCircle2, Briefcase, CalendarClock, 
   Wallet, FileText, Barcode, MessageCircle, Receipt, TrendingUp, TrendingDown,
-  UserCheck, ShieldCheck
+  UserCheck, ShieldCheck, Smartphone, Zap, Star, ArrowRight, QrCode
 } from 'lucide-react';
 
 // --- DATA INITIAL ---
@@ -154,52 +154,182 @@ export default function App() {
 // ==========================================
 function LandingPage({ onNavigate }) {
   return (
-    <div className="min-h-screen bg-slate-50 font-sans text-slate-800">
-      <nav className="flex justify-between items-center p-6 lg:px-20 bg-white border-b sticky top-0 z-50">
-        <div className="font-extrabold text-2xl text-blue-700 flex items-center gap-2"><Store/> WarungKu POS</div>
-        <button onClick={() => onNavigate('auth')} className="bg-blue-600 text-white px-6 py-2 rounded-full font-bold shadow hover:bg-blue-700">Masuk / Daftar</button>
+    <div className="min-h-screen bg-slate-50 font-sans text-slate-800 selection:bg-blue-200">
+      {/* NAVBAR */}
+      <nav className="flex justify-between items-center p-4 lg:px-20 bg-white/80 backdrop-blur-md border-b sticky top-0 z-50">
+        <div className="font-extrabold text-2xl text-blue-700 flex items-center gap-2">
+          <div className="bg-blue-600 text-white p-1.5 rounded-lg"><Store size={24}/></div> 
+          WarungKu POS
+        </div>
+        <div className="flex items-center gap-4">
+          <button onClick={() => onNavigate('auth')} className="text-slate-600 font-bold hover:text-blue-600 hidden md:block">Masuk</button>
+          <button onClick={() => onNavigate('auth')} className="bg-blue-600 text-white px-6 py-2.5 rounded-full font-bold shadow-lg shadow-blue-200 hover:bg-blue-700 hover:-translate-y-0.5 transition-all">Daftar Sekarang</button>
+        </div>
       </nav>
 
-      <header className="py-20 px-6 lg:px-20 text-center max-w-4xl mx-auto">
-        <h1 className="text-4xl md:text-6xl font-black mb-6 leading-tight">Cukup Sekali Beli <br/><span className="text-blue-600">Langsung Pakai Selamanya</span></h1>
-        <p className="text-xl text-slate-600 mb-10">Aplikasi Kasir WarungKu beda dari yang lain. Dibuat dari pengalaman jualan langsung di warung. Cocok untuk warung sembako, kelontong, dan UMKM. Tanpa langganan bulanan, tanpa iklan!</p>
-        <button onClick={() => onNavigate('auth')} className="bg-green-600 text-white px-10 py-4 rounded-full font-extrabold text-xl shadow-xl hover:bg-green-700 transform hover:scale-105 transition">Mulai Gunakan Sekarang</button>
+      {/* HERO SECTION */}
+      <header className="relative pt-24 pb-32 px-6 lg:px-20 text-center max-w-5xl mx-auto overflow-hidden">
+        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-full bg-gradient-to-b from-blue-50 to-transparent -z-10 rounded-full blur-3xl opacity-50"></div>
+        <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-blue-100 text-blue-800 font-bold text-sm mb-8 shadow-sm">
+          <Star size={16} className="text-yellow-500 fill-yellow-500"/> Pilihan #1 UMKM & Warung Kelontong
+        </div>
+        <h1 className="text-5xl md:text-7xl font-black mb-8 leading-tight tracking-tight text-slate-900">
+          Kasir Pintar Warung.<br/>
+          <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-indigo-600">Cukup Sekali Beli.</span>
+        </h1>
+        <p className="text-xl text-slate-600 mb-10 max-w-2xl mx-auto leading-relaxed">
+          Tinggalkan cara manual! Kelola penjualan, stok barang otomatis, cetak struk, dan catat hutang pelanggan hanya dari satu aplikasi. <b>Tanpa langganan bulanan.</b>
+        </p>
+        <div className="flex flex-col sm:flex-row justify-center items-center gap-4">
+          <button onClick={() => onNavigate('auth')} className="w-full sm:w-auto bg-green-500 text-white px-10 py-4 rounded-full font-extrabold text-lg shadow-xl shadow-green-200 hover:bg-green-600 hover:scale-105 transition-all flex items-center justify-center gap-2">
+            Mulai Gunakan Sekarang <ArrowRight size={20}/>
+          </button>
+          <button onClick={() => document.getElementById('fitur').scrollIntoView({behavior: 'smooth'})} className="w-full sm:w-auto bg-white text-slate-700 border-2 border-slate-200 px-10 py-4 rounded-full font-extrabold text-lg hover:bg-slate-50 hover:border-slate-300 transition-all">
+            Pelajari Fitur
+          </button>
+        </div>
       </header>
 
-      <section className="py-16 px-6 lg:px-20 bg-white">
-        <h2 className="text-3xl font-black text-center mb-12">Fitur Andalan WarungKu</h2>
+      {/* KENAPA MEMILIH KAMI */}
+      <section className="py-12 bg-slate-900 text-white">
+        <div className="max-w-6xl mx-auto px-6 grid md:grid-cols-3 gap-8 text-center">
+          <div className="p-6">
+            <Zap className="w-12 h-12 text-yellow-400 mx-auto mb-4" />
+            <h3 className="text-xl font-bold mb-2">Sangat Praktis</h3>
+            <p className="text-slate-400">Didesain khusus untuk orang awam. Fokus pada fitur yang benar-benar dipakai warung.</p>
+          </div>
+          <div className="p-6">
+            <ShieldCheck className="w-12 h-12 text-green-400 mx-auto mb-4" />
+            <h3 className="text-xl font-bold mb-2">Sekali Beli (Lifetime)</h3>
+            <p className="text-slate-400">Tidak ada tagihan bulanan atau tahunan. Bayar sekali di awal, aplikasi jadi milik Anda selamanya.</p>
+          </div>
+          <div className="p-6">
+            <Smartphone className="w-12 h-12 text-blue-400 mx-auto mb-4" />
+            <h3 className="text-xl font-bold mb-2">Bebas Iklan</h3>
+            <p className="text-slate-400">Fokus berjualan tanpa gangguan iklan yang tiba-tiba muncul di tengah transaksi kasir.</p>
+          </div>
+        </div>
+      </section>
+
+      {/* FITUR UNGGULAN */}
+      <section id="fitur" className="py-24 px-6 lg:px-20 bg-slate-50">
+        <div className="text-center max-w-3xl mx-auto mb-16">
+          <h2 className="text-4xl font-black text-slate-900 mb-4">Fitur Lengkap WarungKu</h2>
+          <p className="text-lg text-slate-600">Semua alat yang Anda butuhkan untuk mengembangkan warung ada di sini.</p>
+        </div>
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
           {[
-            {icon: <Barcode className="text-blue-600 w-8 h-8"/>, title: 'Kasir Cepat & Praktis', desc: 'Bisa scan barcode produk & langsung cetak struk untuk pelanggan.'},
-            {icon: <Package className="text-blue-600 w-8 h-8"/>, title: 'Kelola Stok Otomatis', desc: 'Data stok terpotong otomatis saat ada penjualan.'},
-            {icon: <TrendingUp className="text-blue-600 w-8 h-8"/>, title: 'Laporan Omzet & Laba', desc: 'Analisis WarungKu menghitung pendapatan dan keuntungan bersih harian.'},
-            {icon: <Users className="text-blue-600 w-8 h-8"/>, title: 'Catat Hutang (Piutang)', desc: 'Pelanggan ngutang? Catat langsung di sistem agar tidak lupa.'},
-            {icon: <Receipt className="text-blue-600 w-8 h-8"/>, title: 'Catat Pengeluaran', desc: 'Catat belanja modal, bayar listrik, atau uang kebersihan harian.'},
-            {icon: <MessageCircle className="text-blue-600 w-8 h-8"/>, title: 'Share Katalog ke WA', desc: 'Kirim daftar harga barang otomatis ke WhatsApp pelanggan.'},
+            {icon: <Barcode/>, color: 'bg-blue-100 text-blue-600', title: 'Kasir & Scan Barcode', desc: 'Jualan makin cepat. Tinggal scan barcode produk pakai scanner & langsung cetak struk kertas.'},
+            {icon: <Package/>, color: 'bg-green-100 text-green-600', title: 'Stok Otomatis', desc: 'Tidak perlu ngitung manual lagi. Setiap ada barang laku, stok di gudang otomatis berkurang.'},
+            {icon: <TrendingUp/>, color: 'bg-amber-100 text-amber-600', title: 'Laporan Laba Rugi', desc: 'Sistem otomatis menghitung modal dan harga jual, sehingga Anda tahu untung bersih setiap harinya.'},
+            {icon: <Users/>, color: 'bg-purple-100 text-purple-600', title: 'Catat Bon / Hutang', desc: 'Pelanggan sering ngutang? Catat langsung di sistem, lengkap dengan total tagihan agar tidak lupa.'},
+            {icon: <MessageCircle/>, color: 'bg-teal-100 text-teal-600', title: 'Katalog WhatsApp', desc: 'Bagikan daftar harga barang dan promo terbaru langsung ke WhatsApp pelanggan hanya dengan 1 klik.'},
+            {icon: <Receipt/>, color: 'bg-rose-100 text-rose-600', title: 'Harga Grosir Otomatis', desc: 'Beli 1 harga normal, beli 10 otomatis jadi harga grosir. Sangat cocok untuk warung sembako besar.'},
           ].map((f, i) => (
-            <div key={i} className="p-6 border rounded-2xl bg-slate-50 hover:shadow-lg transition">
-              <div className="mb-4 bg-white w-14 h-14 rounded-full flex items-center justify-center shadow-sm">{f.icon}</div>
-              <h3 className="text-xl font-bold mb-2">{f.title}</h3>
-              <p className="text-slate-600">{f.desc}</p>
+            <div key={i} className="p-8 border border-slate-200 rounded-3xl bg-white hover:-translate-y-2 hover:shadow-2xl hover:shadow-blue-900/5 transition-all duration-300">
+              <div className={`w-14 h-14 rounded-2xl flex items-center justify-center mb-6 ${f.color}`}>
+                {React.cloneElement(f.icon, { size: 28 })}
+              </div>
+              <h3 className="text-xl font-bold mb-3 text-slate-900">{f.title}</h3>
+              <p className="text-slate-600 leading-relaxed">{f.desc}</p>
             </div>
           ))}
         </div>
       </section>
 
-      <section className="py-20 px-6 text-center bg-slate-900 text-white">
-        <h2 className="text-3xl font-black mb-8">Hemat & Praktis</h2>
-        <div className="flex flex-col md:flex-row justify-center gap-8 mb-12 text-lg font-bold">
-          <div className="flex items-center gap-2 justify-center"><CheckCircle2 className="text-green-400"/> Tidak perlu langganan bulanan</div>
-          <div className="flex items-center gap-2 justify-center"><CheckCircle2 className="text-green-400"/> Fitur fokus yang penting saja</div>
-          <div className="flex items-center gap-2 justify-center"><CheckCircle2 className="text-green-400"/> Tidak ada iklan mengganggu</div>
-        </div>
-        <div className="bg-white text-slate-900 inline-block p-8 rounded-3xl shadow-2xl">
-          <p className="text-sm font-bold text-blue-600 uppercase tracking-widest mb-2">PROMO LIFETIME</p>
-          <h3 className="text-5xl font-black mb-2">Rp 299.000</h3>
-          <p className="text-slate-500 mb-6">Sekali bayar untuk akses selamanya.</p>
-          <button onClick={() => onNavigate('auth')} className="w-full bg-blue-600 text-white py-3 rounded-xl font-bold hover:bg-blue-700">Beli Sekarang</button>
+      {/* CARA PEMBELIAN & TUTORIAL */}
+      <section className="py-24 px-6 bg-white border-y border-slate-100">
+        <div className="max-w-6xl mx-auto flex flex-col lg:flex-row items-center gap-16">
+          <div className="lg:w-1/2">
+            <h2 className="text-4xl font-black text-slate-900 mb-6">Bagaimana Cara Mendapatkan Aplikasinya?</h2>
+            <p className="text-lg text-slate-600 mb-8 leading-relaxed">
+              Proses pendaftaran sangat mudah dan transparan. Anda bisa langsung menggunakan aplikasi setelah melakukan konfirmasi pembayaran.
+            </p>
+            <div className="space-y-6">
+              {[
+                { step: '1', title: 'Daftar Akun Toko', desc: 'Klik tombol Daftar, masukkan nama toko dan buat username & password Anda.' },
+                { step: '2', title: 'Lakukan Pembayaran', desc: 'Transfer biaya lisensi seumur hidup melalui Rekening Bank atau scan kode QRIS resmi kami.' },
+                { step: '3', title: 'Konfirmasi via WhatsApp', desc: 'Kirimkan bukti screenshot transfer ke nomor WhatsApp Admin WarungKu.' },
+                { step: '4', title: 'Toko Aktif Selamanya!', desc: 'Admin akan memverifikasi dalam 5 menit, dan toko Anda siap digunakan untuk berjualan.' }
+              ].map((item, idx) => (
+                <div key={idx} className="flex gap-4">
+                  <div className="shrink-0 w-10 h-10 rounded-full bg-blue-600 text-white flex items-center justify-center font-bold text-lg">{item.step}</div>
+                  <div>
+                    <h4 className="text-xl font-bold text-slate-900 mb-1">{item.title}</h4>
+                    <p className="text-slate-600">{item.desc}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+          
+          {/* PANEL INFO PEMBAYARAN */}
+          <div className="lg:w-1/2 w-full">
+            <div className="bg-slate-50 p-8 rounded-3xl border border-slate-200 shadow-xl relative overflow-hidden">
+              <div className="absolute top-0 right-0 w-32 h-32 bg-blue-600 rounded-bl-full -z-0 opacity-10"></div>
+              <h3 className="text-2xl font-black text-slate-900 mb-6 relative z-10">Metode Pembayaran Resmi</h3>
+              
+              <div className="space-y-4 relative z-10">
+                <div className="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm flex items-center gap-4">
+                  <div className="bg-orange-100 text-orange-600 p-3 rounded-xl font-black italic text-lg">SeaBank</div>
+                  <div>
+                    <div className="text-xs font-bold text-slate-400 uppercase">Transfer Bank</div>
+                    <div className="text-xl font-mono font-bold text-slate-900">9010 6464 0699</div>
+                    <div className="text-sm font-medium text-slate-600">a.n Richky Irawan</div>
+                  </div>
+                </div>
+
+                <div className="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm flex items-center gap-4">
+                  <div className="bg-blue-100 text-blue-600 p-3 rounded-xl"><QrCode size={32}/></div>
+                  <div>
+                    <div className="text-xs font-bold text-slate-400 uppercase">E-Wallet (Dana, OVO, GoPay)</div>
+                    <div className="text-xl font-mono font-bold text-slate-900">0852 7496 4111</div>
+                    <div className="text-sm font-medium text-slate-600">Scan QRIS / Input Manual</div>
+                  </div>
+                </div>
+
+                <div className="bg-green-50 p-5 rounded-2xl border border-green-200 mt-6">
+                  <div className="text-xs font-bold text-green-800 uppercase mb-1">Konfirmasi WhatsApp</div>
+                  <div className="text-xl font-black text-green-700 flex items-center gap-2">
+                    <MessageCircle /> 0853-6377-0228
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </section>
+
+      {/* PRICING CTA */}
+      <section className="py-20 px-6 text-center bg-blue-600 text-white">
+        <h2 className="text-3xl font-black mb-6">Investasi Terbaik Untuk Bisnis Anda</h2>
+        <p className="text-xl text-blue-100 mb-10 max-w-2xl mx-auto">Kenapa harus bayar bulanan kalau bisa beli putus? Jangan biarkan pembukuan berantakan menghambat keuntungan Anda.</p>
+        
+        <div className="bg-white text-slate-900 inline-block p-10 rounded-3xl shadow-2xl transform hover:scale-105 transition-transform duration-300">
+          <p className="text-sm font-black text-blue-600 uppercase tracking-widest mb-4 bg-blue-50 py-1 px-4 rounded-full inline-block">PROMO LIFETIME (SEKALI BAYAR)</p>
+          <div className="flex justify-center items-start gap-1 mb-2">
+            <span className="text-2xl font-bold mt-2">Rp</span>
+            <span className="text-6xl font-black">299<span className="text-4xl">.000</span></span>
+          </div>
+          <p className="text-slate-500 mb-8 font-medium">Akses selamanya. Gratis update fitur.</p>
+          <ul className="text-left space-y-3 mb-8">
+             <li className="flex items-center gap-2 font-medium"><CheckCircle2 className="text-green-500" size={20}/> Kasir Tanpa Batas Transaksi</li>
+             <li className="flex items-center gap-2 font-medium"><CheckCircle2 className="text-green-500" size={20}/> Manajemen Stok & Laba Rugi</li>
+             <li className="flex items-center gap-2 font-medium"><CheckCircle2 className="text-green-500" size={20}/> Dukungan Bantuan via WhatsApp</li>
+          </ul>
+          <button onClick={() => onNavigate('auth')} className="w-full bg-blue-600 text-white py-4 rounded-xl font-bold text-lg hover:bg-blue-700 shadow-lg shadow-blue-200 transition-all">
+            Daftar & Beli Sekarang
+          </button>
+        </div>
+      </section>
+
+      {/* FOOTER */}
+      <footer className="bg-slate-950 text-slate-400 py-10 text-center">
+        <div className="flex items-center justify-center gap-2 font-bold text-xl text-white mb-4">
+          <Store /> WarungKu POS
+        </div>
+        <p className="text-sm">Hak Cipta © {new Date().getFullYear()} Lentera Siak. Dibuat khusus untuk memajukan UMKM Indonesia.</p>
+      </footer>
     </div>
   );
 }
